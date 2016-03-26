@@ -54,12 +54,13 @@
 	"loadaddr= " __stringify(CONFIG_SYS_LOAD_ADDR) "\0" \
 	"ramboot=setenv bootargs " CONFIG_BOOTARGS ";" \
 		"bootm ${loadaddr} - ${fdt_addr}\0" \
-	"bootimage=zImage\0" \
+        "mmcloadcmd=ext4load\0" \
+	"bootimage=/boot/zImage\0" \
 	"fdt_addr=100\0" \
-	"fdtimage=socfpga.dtb\0" \
-	"fpgaimage=socfpga.rbf\0" \
+	"fdtimage=/boot/socfpga.dtb\0" \
+	"fpgaimage=/boot/socfpga.rbf\0" \
 	"fpgadata=0x2000000\0" \
-	"fpgaconfig=load mmc 0:1 ${fpgadata} ${fpgaimage};" \
+	"fpgaconfig=load mmc 0:2 ${fpgadata} ${fpgaimage};" \
 	"fpga load 0 ${fpgadata} ${filesize}\0" \
 	"bootm ${loadaddr} - ${fdt_addr}\0" \
 	"mmcroot=/dev/mmcblk0p2\0" \
@@ -67,9 +68,9 @@
 		" root=${mmcroot} rw rootwait;" \
 		"bootz ${loadaddr} - ${fdt_addr}\0" \
 	"mmcload=mmc rescan;" \
-		"load mmc 0:1 ${fpgadata} ${fpgaimage};" \
-		"load mmc 0:1 ${loadaddr} ${bootimage};" \
-		"load mmc 0:1 ${fdt_addr} ${fdtimage}\0" \
+		"load mmc 0:2 ${fpgadata} ${fpgaimage};" \
+		"load mmc 0:2 ${loadaddr} ${bootimage};" \
+		"load mmc 0:2 ${fdt_addr} ${fdtimage}\0" \
 
 /* The rest of the configuration is shared */
 #include <configs/socfpga_common.h>
