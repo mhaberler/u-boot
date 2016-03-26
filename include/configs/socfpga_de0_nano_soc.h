@@ -80,6 +80,10 @@
 		       "echo Loaded environment from ${bootenv};" \
 		       "run importbootenv;" \
 		"fi;" \
+                "if test -n $uenvcmd; then " \
+                        "echo Running uenvcmd: $uenvcmd ...;" \
+                        "run uenvcmd;" \
+                "fi;" \
 		"load ${interface} ${bootpart} ${fpgadata} ${bootdir}/${fpgaimage};" \
 		"load ${interface} ${bootpart} ${loadaddr} ${bootdir}/${bootimage};" \
 		"load ${interface} ${bootpart} ${fdt_addr} ${bootdir}/${fdtimage}\0" \
