@@ -55,22 +55,35 @@
 	"ramboot=setenv bootargs " CONFIG_BOOTARGS ";" \
 		"bootm ${loadaddr} - ${fdt_addr}\0" \
         "mmcloadcmd=ext4load\0" \
-	"bootimage=/boot/zImage\0" \
+	"interface=mmc\0" \
+        "bootenv=uEnv.txt\0" \
+	"bootpart=0:2\0" \
+	"bootdir=/boot\0" \
+	"bootimage=zImage\0" \
 	"fdt_addr=100\0" \
-	"fdtimage=/boot/socfpga.dtb\0" \
-	"fpgaimage=/boot/socfpga.rbf\0" \
+	"fdtimage=socfpga.dtb\0" \
+	"fpgaimage=socfpga.rbf\0" \
 	"fpgadata=0x2000000\0" \
-	"fpgaconfig=load mmc 0:2 ${fpgadata} ${fpgaimage};" \
+	"fpgaconfig=load ${interface} ${bootpart} ${fpgadata} ${bootdir}/${fpgaimage};" \
 	"fpga load 0 ${fpgadata} ${filesize}\0" \
 	"bootm ${loadaddr} - ${fdt_addr}\0" \
 	"mmcroot=/dev/mmcblk0p2\0" \
 	"mmcboot=setenv bootargs " CONFIG_BOOTARGS \
 		" root=${mmcroot} rw rootwait;" \
 		"bootz ${loadaddr} - ${fdt_addr}\0" \
-	"mmcload=mmc rescan;" \
-		"load mmc 0:2 ${fpgadata} ${fpgaimage};" \
-		"load mmc 0:2 ${loadaddr} ${bootimage};" \
-		"load mmc 0:2 ${fdt_addr} ${fdtimage}\0" \
+	"loadbootenv=load  ${interface} ${bootpart} ${loadaddr} ${bootdir}/${bootenv}\0" \
+	"importbootenv=echo Importing environment from ${bootdir}/${bootenv} ...; " \
+		"env import -t -r $loadaddr $filesize\0" \
+        "lsboot=ext4ls ${interface} ${bootpart} ${bootdir};\0"  \
+	"mmcload=mmc rescan;"		    \
+		"if run loadbootenv; then " \
+		       "echo Loaded environment from ${bootenv};" \
+		       "run importbootenv;" \
+		"fi;" \
+		"load ${interface} ${bootpart} ${fpgadata} ${bootdir}/${fpgaimage};" \
+		"load ${interface} ${bootpart} ${loadaddr} ${bootdir}/${bootimage};" \
+		"load ${interface} ${bootpart} ${fdt_addr} ${bootdir}/${fdtimage}\0" \
+
 
 /* The rest of the configuration is shared */
 #include <configs/socfpga_common.h>
