@@ -37,7 +37,7 @@
 #define CONFIG_BOOTDELAY	3
 #define CONFIG_BOOTFILE		"fitImage"
 #define CONFIG_BOOTARGS		"console=ttyS0," __stringify(CONFIG_BAUDRATE)
-#define CONFIG_BOOTCOMMAND	"run fpgaconfig; run mmcload; run mmcboot"
+#define CONFIG_BOOTCOMMAND	"run importuenv; run fpgaconfig; run mmcload; run mmcboot"
 #define CONFIG_LOADADDR		0x01000000
 #define CONFIG_SYS_LOAD_ADDR	CONFIG_LOADADDR
 
@@ -69,17 +69,18 @@
 	"bootm ${loadaddr} - ${fdt_addr}\0" \
 	"mmcroot=/dev/mmcblk0p2\0" \
 	"mmcboot=setenv bootargs " CONFIG_BOOTARGS \
-		" root=${mmcroot} rw rootwait;" \
-		"bootz ${loadaddr} - ${fdt_addr}\0" \
+		" root=${mmcroot} rw rootwait ${extra_bootargs};" \
+		" echo bootargs=${bootargs};" \
+	       "bootz ${loadaddr} - ${fdt_addr}\0" \
 	"loadbootenv=load  ${interface} ${bootpart} ${loadaddr} ${bootdir}/${bootenv}\0" \
 	"importbootenv=echo Importing environment from ${bootdir}/${bootenv} ...; " \
 		"env import -t -r $loadaddr $filesize\0" \
         "lsboot=ext4ls ${interface} ${bootpart} ${bootdir};\0"  \
-	"mmcload=mmc rescan;"		    \
-		"if run loadbootenv; then " \
+        "importuenv=if run loadbootenv; then " \
 		       "echo Loaded environment from ${bootenv};" \
 		       "run importbootenv;" \
-		"fi;" \
+		"fi;\0" \
+	"mmcload=mmc rescan;"		    \
                 "if test -n $uenvcmd; then " \
                         "echo Running uenvcmd: $uenvcmd ...;" \
                         "run uenvcmd;" \
