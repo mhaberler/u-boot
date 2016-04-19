@@ -56,15 +56,14 @@
 		"bootm ${loadaddr} - ${fdt_addr}\0" \
         "mmcloadcmd=ext4load\0" \
 	"interface=mmc\0" \
-        "bootenv=uEnv.txt\0" \
+        "bootenv=/boot/uEnv.txt\0" \
 	"bootpart=0:2\0" \
-	"bootdir=/boot\0" \
-	"bootimage=zImage\0" \
+	"bootimage=/boot/zImage\0" \
 	"fdt_addr=100\0" \
-	"fdtimage=socfpga.dtb\0" \
-	"fpgaimage=socfpga.rbf\0" \
+	"fdtimage=/lib/firmware/socfpga/soc_system.dtb\0" \
+	"fpgaimage=\0" \
 	"fpgadata=0x2000000\0" \
-	"fpgaconfig=load ${interface} ${bootpart} ${fpgadata} ${bootdir}/${fpgaimage};" \
+	"fpgaconfig=load ${interface} ${bootpart} ${fpgadata} ${fpgaimage};" \
 	"fpga load 0 ${fpgadata} ${filesize}\0" \
 	"bootm ${loadaddr} - ${fdt_addr}\0" \
 	"mmcroot=/dev/mmcblk0p2\0" \
@@ -72,10 +71,9 @@
 		" root=${mmcroot} rw rootwait ${extra_bootargs};" \
 		" echo bootargs=${bootargs};" \
 	       "bootz ${loadaddr} - ${fdt_addr}\0" \
-	"loadbootenv=load  ${interface} ${bootpart} ${loadaddr} ${bootdir}/${bootenv}\0" \
-	"importbootenv=echo Importing environment from ${bootdir}/${bootenv} ...; " \
+	"loadbootenv=load  ${interface} ${bootpart} ${loadaddr} ${bootenv}\0" \
+	"importbootenv=echo Importing environment from ${bootenv} ...; " \
 		"env import -t -r $loadaddr $filesize\0" \
-        "lsboot=ext4ls ${interface} ${bootpart} ${bootdir};\0"  \
         "importuenv=if run loadbootenv; then " \
 		       "echo Loaded environment from ${bootenv};" \
 		       "run importbootenv;" \
@@ -85,9 +83,14 @@
                         "echo Running uenvcmd: $uenvcmd ...;" \
                         "run uenvcmd;" \
                 "fi;" \
-		"load ${interface} ${bootpart} ${fpgadata} ${bootdir}/${fpgaimage};" \
-		"load ${interface} ${bootpart} ${loadaddr} ${bootdir}/${bootimage};" \
-		"load ${interface} ${bootpart} ${fdt_addr} ${bootdir}/${fdtimage}\0" \
+	        "if test -n $fpgaimage; then " \
+                        "echo fpgaimage= not defined, skipping FPGA load...;" \
+	        "else " \
+			"echo loading FPGA from ${fpgaimage}:;" \
+			"load ${interface} ${bootpart} ${fpgadata} ${fpgaimage};" \
+                "fi;" \
+		"load ${interface} ${bootpart} ${loadaddr} ${bootimage};" \
+		"load ${interface} ${bootpart} ${fdt_addr} ${fdtimage}\0" \
 
 
 /* The rest of the configuration is shared */
