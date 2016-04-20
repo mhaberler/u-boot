@@ -89,6 +89,10 @@
 						"setenv fdt_file ${dtb};" \
 						"echo Using: dtb=${fdt_file} ...;" \
 					"fi;" \
+	                                "if test -n $uenvcmd; then "			      \
+	                                    "echo Running uenvcmd: $uenvcmd ...;"				\
+                                            "run uenvcmd;" \
+                                        "fi;" \
 	                                "if test -n ${fpgaimage}; then "	\
                                                  "echo fpgaimage=${fpgaimage} not set, skipping FPGA load...;" \
 	                                 "else " \
