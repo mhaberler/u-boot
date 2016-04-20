@@ -89,15 +89,15 @@
 						"setenv fdt_file ${dtb};" \
 						"echo Using: dtb=${fdt_file} ...;" \
 					"fi;" \
-	                                "if test -n $uenvcmd; then "			      \
+	                                "if test -n ${uenvcmd}; then "			      \
 	                                    "echo Running uenvcmd: $uenvcmd ...;"				\
                                             "run uenvcmd;" \
                                         "fi;" \
 	                                "if test -n ${fpgaimage}; then "	\
-                                                 "echo fpgaimage=${fpgaimage} not set, skipping FPGA load...;" \
-	                                 "else " \
 			                         "echo loading FPGA from ${fpgaimage}...;" \
 						 "run fpgaconfig;" \
+	                                 "else " \
+                                                 "echo fpgaimage= not set, skipping FPGA load...;" \
                                         "fi;" \
 					"echo Checking if uname_r is set in /boot/uEnv.txt...;" \
 					"if test -n ${uname_r}; then " \
