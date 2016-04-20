@@ -69,7 +69,7 @@
 	"mmcroot=/dev/mmcblk0p2\0" \
 	"mmcboot=setenv bootargs " CONFIG_BOOTARGS \
 		" root=${mmcroot} rw rootwait ${extra_bootargs};" \
-		" echo bootargs=${bootargs};" \
+		" echo bootargs=${bootargs}  ${extra_bootargs};" \
 	       "bootz ${loadaddr} - ${fdt_addr}\0" \
 	"loadbootenv=load  ${interface} ${bootpart} ${loadaddr} ${bootenv}\0" \
 	"importbootenv=echo Importing environment from ${bootenv} ...; " \
