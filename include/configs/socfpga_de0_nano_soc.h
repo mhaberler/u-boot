@@ -90,7 +90,7 @@
 						"setenv fdt_file ${dtb};" \
 						"echo Using: dtb=${fdt_file} ...;" \
 					"fi;" \
-	                                "if test -n $fpgaimage; then "	\
+	                                "if test -n ${fpgaimage}; then "	\
                                                  "echo fpgaimage= not set, skipping FPGA load...;" \
 	                                 "else " \
 			                         "echo loading FPGA from ${fpgaimage}:;" \
