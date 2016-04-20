@@ -59,7 +59,6 @@
 	"fdtdir=/lib/firmware/socfpga\0" \
 	"rdaddr=0x07080000\0" \
 	"interface=mmc\0" \
-	"fpgaimage=\0" \
 	"fpgadata=0x2000000\0" \
 	"fpgaconfig=load ${interface} ${bootpart} ${fpgadata} ${fpgaimage};\0" \
 	"optargs=\0" \
@@ -91,7 +90,7 @@
 						"echo Using: dtb=${fdt_file} ...;" \
 					"fi;" \
 	                                "if test -n ${fpgaimage}; then "	\
-                                                 "echo fpgaimage= not set, skipping FPGA load...;" \
+                                                 "echo fpgaimage=${fpgaimage} not set, skipping FPGA load...;" \
 	                                 "else " \
 			                         "echo loading FPGA from ${fpgaimage}...;" \
 						 "run fpgaconfig;" \
