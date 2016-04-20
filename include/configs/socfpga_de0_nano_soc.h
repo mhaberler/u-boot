@@ -81,6 +81,7 @@
 			"for i in 2 3 4 5 6 7 ; do " \
 				"setenv mmcpart ${i};" \
 				"setenv bootpart ${mmcdev}:${mmcpart};" \
+	                        "echo trying interface=${interface} bootpart${bootpart} ...;"	\
 				"if test -e ${interface} ${bootpart} /boot/uEnv.txt; then " \
 					"load ${interface} ${bootpart} ${loadaddr} /boot/uEnv.txt;" \
 					"env import -t ${loadaddr} ${filesize};" \
