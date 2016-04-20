@@ -90,7 +90,7 @@
 						"echo Using: dtb=${fdt_file} ...;" \
 					"fi;" \
 	                                "if test -n ${uenvcmd}; then "			      \
-	                                    "echo Running uenvcmd: $uenvcmd ...;"				\
+	                                    "echo Running uenvcmd:  ${uenvcmd} ...;"				\
                                             "run uenvcmd;" \
                                         "fi;" \
 	                                "if test -n ${fpgaimage}; then "	\
