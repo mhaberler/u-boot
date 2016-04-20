@@ -61,7 +61,7 @@
 	"interface=mmc\0" \
 	"fpgaimage=\0" \
 	"fpgadata=0x2000000\0" \
-	"fpgaconfig=load ${interface} ${bootpart} ${fpgadata} ${fpgaimage};" \
+	"fpgaconfig=load ${interface} ${bootpart} ${fpgadata} ${fpgaimage};\0" \
 	"optargs=\0" \
 	"cmdline=\0" \
 	"mmcdev=0\0" \
@@ -93,7 +93,7 @@
 	                                "if test -n ${fpgaimage}; then "	\
                                                  "echo fpgaimage= not set, skipping FPGA load...;" \
 	                                 "else " \
-			                         "echo loading FPGA from ${fpgaimage}:;" \
+			                         "echo loading FPGA from ${fpgaimage}...;" \
 						 "run fpgaconfig;" \
                                         "fi;" \
 					"echo Checking if uname_r is set in /boot/uEnv.txt...;" \
