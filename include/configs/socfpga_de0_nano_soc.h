@@ -61,7 +61,8 @@
 	"interface=mmc\0" \
 	"fpgadata=0x2000000\0" \
         "fpgaimage=/lib/firmware/socfpga/soc_system.rbf\0" \
-	"fpgaconfig=load ${interface} ${bootpart} ${fpgadata} ${fpgaimage};\0" \
+	"fpgaconfig=load ${interface} ${bootpart} ${fpgadata} ${fpgaimage};" \
+        "fpga load 0 ${fpgadata} ${filesize}\0" \
 	"optargs=\0" \
 	"cmdline=\0" \
 	"mmcdev=0\0" \
