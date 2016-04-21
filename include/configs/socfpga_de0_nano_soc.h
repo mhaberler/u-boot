@@ -56,13 +56,13 @@
 		"bootm ${loadaddr} - ${fdt_addr}\0" \
         "mmcloadcmd=ext4load\0" \
 	"interface=mmc\0" \
-        "bootenv=uEnv.txt\0" \
+        "bootenv=/boot/uEnv.txt\0" \
 	"bootpart=0:2\0" \
-	"bootdir=/boot\0" \
-	"bootimage=zImage\0" \
+	"bootdir=/\0" \
+	"bootimage=/boot/vmlinuz-3.10.37-ltsi-rt37-05841-g81c6be3\0" \
 	"fdt_addr=100\0" \
-	"fdtimage=socfpga.dtb\0" \
-	"fpgaimage=socfpga.rbf\0" \
+	"fdtimage=/lib/firmware/socfpga/soc_system.dtb\0" \
+	"fpgaimage=/lib/firmware/socfpga/soc_system.rbf\0" \
 	"fpgadata=0x2000000\0" \
 	"fpgaconfig=load ${interface} ${bootpart} ${fpgadata} ${bootdir}/${fpgaimage};" \
 	"fpga load 0 ${fpgadata} ${filesize}\0" \
