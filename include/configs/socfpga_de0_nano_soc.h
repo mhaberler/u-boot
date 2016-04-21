@@ -38,7 +38,7 @@
 #define CONFIG_BOOTDELAY	3
 #define CONFIG_BOOTFILE		"fitImage"
 #define CONFIG_BOOTARGS		"console=ttyS0," __stringify(CONFIG_BAUDRATE)
-#define CONFIG_BOOTCOMMAND	"run importuenv; run mmcload; run mmcboot"
+#define CONFIG_BOOTCOMMAND	"run mmcload; run mmcboot"
 #define CONFIG_LOADADDR		0x01000000
 #define CONFIG_SYS_LOAD_ADDR	CONFIG_LOADADDR
 
@@ -60,6 +60,7 @@
 	"rdaddr=0x07080000\0" \
 	"interface=mmc\0" \
 	"fpgadata=0x2000000\0" \
+        "fpgaimage=/lib/firmware/socfpga/soc_system.rbf\0" \
 	"fpgaconfig=load ${interface} ${bootpart} ${fpgadata} ${fpgaimage};\0" \
 	"optargs=\0" \
 	"cmdline=\0" \
@@ -95,8 +96,12 @@
                                             "run uenvcmd;" \
                                         "fi;" \
 	                                "if test -n ${fpgaimage}; then "	\
-			                         "echo loading FPGA from ${fpgaimage}...;" \
-						 "run fpgaconfig;" \
+	       	                                "if test -e ${fpgaimage}; then "	\
+						       "echo loading FPGA from ${fpgaimage}...;" \
+						       "run fpgaconfig;" \
+						 "else "		\
+                                                       "echo fpgaimage: file ${fpgaimage} not found - skipping FPGA load...;" \
+					         "fi;"		\
 	                                 "else " \
                                                  "echo fpgaimage= not set, skipping FPGA load...;" \
                                         "fi;" \
