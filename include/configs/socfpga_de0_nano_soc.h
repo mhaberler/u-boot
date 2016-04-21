@@ -38,7 +38,7 @@
 #define CONFIG_BOOTDELAY	3
 #define CONFIG_BOOTFILE		"fitImage"
 #define CONFIG_BOOTARGS		"console=ttyS0," __stringify(CONFIG_BAUDRATE)
-#define CONFIG_BOOTCOMMAND	"run mmcload; run mmcboot"
+#define CONFIG_BOOTCOMMAND	"run mmcboot"
 #define CONFIG_LOADADDR		0x01000000
 #define CONFIG_SYS_LOAD_ADDR	CONFIG_LOADADDR
 
@@ -144,7 +144,7 @@
 			"fi; " \
 			"setenv rdfile initrd.img-${uname_r}; " \
 			"if test -e ${interface} ${bootpart} ${bootdir}/${rdfile}; then " \
-				"echo loading ${bootdir}/${rdfile} ...; "\
+				"echo loading initrd: ${bootdir}/${rdfile} ...; "\
 				"run loadrd;" \
 				"if test -n ${uuid}; then " \
 					"setenv mmcroot UUID=${uuid} ro;" \
@@ -155,7 +155,7 @@
 				"bootz ${loadaddr} ${rdaddr}:${rdsize} ${fdt_addr}; " \
 			"else " \
 				"run mmcargs;" \
-				"echo debug: [${bootargs}] ... ;" \
+				"echo debug: [${bootargs}] (no initrd)... ;" \
 				"echo debug: [bootz ${loadaddr} - ${fdt_addr}] ... ;" \
 				"bootz ${loadaddr} - ${fdt_addr}; " \
 			"fi;" \
