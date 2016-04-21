@@ -97,7 +97,7 @@
                                             "run uenvcmd;" \
                                         "fi;" \
 	                                "if test -n ${fpgaimage}; then "	\
-	       	                                "if test -e ${fpgaimage}; then "	\
+	       	                                "if test -e ${interface} ${bootpart} ${fpgaimage}; then "	\
 						       "echo loading FPGA from ${fpgaimage}...;" \
 						       "run fpgaconfig;" \
 						 "else "		\
