@@ -98,12 +98,12 @@
                                         "fi;" \
 	                                "if test -n ${fpgaimage}; then "	\
 	       	                                "if test -e ${interface} ${bootpart} ${fpgaimage}; then "	\
-						       "echo loading FPGA from ${fpgaimage}...;" \
+						       "echo loading FPGA from ${interface} ${bootpart} ${fpgaimage}...;" \
 						       "run fpgaconfig;" \
 						 "else "		\
                                                        "echo fpgaimage: file ${fpgaimage} not found - skipping FPGA load...;" \
 					         "fi;"		\
-	                                 "else " \
+	                                "else " \
                                                  "echo fpgaimage= not set, skipping FPGA load...;" \
                                         "fi;" \
 					"echo Checking if uname_r is set in /boot/uEnv.txt...;" \
